@@ -1,5 +1,6 @@
 # coding=utf-8
 import random
+
 import chardet
 import requests
 from requests import ConnectionError

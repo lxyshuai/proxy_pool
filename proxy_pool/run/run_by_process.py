@@ -1,4 +1,5 @@
 from multiprocessing import Process
+
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from proxy_pool.proxy_getter.proxy_fetch import ProxyFetch

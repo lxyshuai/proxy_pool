@@ -1,4 +1,3 @@
-import time
 from Queue import Queue
 
 from proxy_pool.db import Client

@@ -1,5 +1,5 @@
 # coding=utf-8
-from sqlalchemy import Column, Integer, VARCHAR, UniqueConstraint, create_engine, Boolean
+from sqlalchemy import Column, Integer, VARCHAR, UniqueConstraint, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 
 # 常量表

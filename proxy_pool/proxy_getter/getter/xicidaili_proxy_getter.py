@@ -1,6 +1,8 @@
 # coding=utf-8
 import time
+
 from bs4 import BeautifulSoup
+
 from proxy_pool.db import Client
 from proxy_pool.db.model.proxy import HTTPS_PROTOCOL, HTTP_PROTOCOL, TRANSPARENT, ANONYMOUS
 from proxy_pool.proxy_getter.getter.proxy_getter import ProxyGetter
