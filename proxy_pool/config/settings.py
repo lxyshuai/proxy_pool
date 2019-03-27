@@ -13,3 +13,7 @@ DATABASE = {
     "PASSWORD": "vae680300",
     "CHARSET": "utf8"
 }
+
+PROXY_GETTER = [
+    "XicidailiProxyGetter"
+]
