@@ -158,10 +158,10 @@ class MysqlClient(Client):
         for condition in condition_list:
             query = query.filter(condition)
         if count == 0:
-            db_logger.info("aaa")
+            db_logger.info("get all proxy")
             return query.order_by(func.rand()).all()
         else:
-            db_logger.info("bbb")
+            db_logger.info("get %s proxy" % count)
             return query.order_by(func.rand()).limit(count).all()
 
     @staticmethod
