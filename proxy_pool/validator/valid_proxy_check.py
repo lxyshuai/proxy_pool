@@ -31,6 +31,6 @@ class ValidProxyCheck(object):
     def check_valid_proxy(self):
         self.put_queue()
         if not self.valid_proxy_queue.empty():
-            proxy_check_logger("Start check valid proxy")
+            proxy_check_logger.info("Start check valid proxy")
             self.start_threads()
-        proxy_check_logger("Check valid proxy complete! sleep 10s")
+        proxy_check_logger.info("Check valid proxy complete! sleep 10s")
