@@ -53,7 +53,8 @@ file_handler.setLevel(logging.DEBUG)
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.DEBUG)
 # 创建格式器，加到日志处理器和控制台处理器中
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(thread)d - %(message)s")
 file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 # 将文件处理器和控制台处理器加入记录器
