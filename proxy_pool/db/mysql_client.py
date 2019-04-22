@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 from proxy_pool.config.settings import DATABASE
 from proxy_pool.db.client import Client
-from proxy_pool.db.model.proxy import Proxy, Base
+from proxy_pool.db.model.proxy import Proxy, Base, HTTP_PROTOCOL
 from proxy_pool.utils.logger import db_logger
 
 
@@ -161,8 +161,15 @@ class MysqlClient(Client):
             db_logger.info("get all proxy")
             return query.order_by(func.rand()).all()
         else:
-            db_logger.info("get %s proxy" % count)
-            return query.order_by(func.rand()).limit(count).all()
+            proxy_list = query.order_by(func.rand()).limit(count).all()
+            if proxy_list:
+                proxy = proxy_list[0]
+                db_logger.info(
+                    "get %d proxy %s://%s:%d" % (count, "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                                                 proxy.ip, proxy.port))
+            else:
+                db_logger.info("There is not satisfied proxy")
+            return proxy_list
 
     @staticmethod
     def determine_condition(condition_dict):
