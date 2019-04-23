@@ -2,6 +2,7 @@ import json
 
 from flask import Flask
 
+from proxy_pool.config import settings
 from proxy_pool.db import Client
 from proxy_pool.db.model.proxy import HTTP_PROTOCOL, HTTPS_PROTOCOL
 
@@ -55,4 +56,4 @@ def get_https_proxy():
 
 
 def api_run():
-    app.run(host="127.0.0.1", port=8080)
+    host = settings.SERVER_API['host'], port = settings.SERVER_API['port']

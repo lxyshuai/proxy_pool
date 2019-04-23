@@ -4,6 +4,7 @@ from multiprocessing import Process
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from proxy_pool.api.proxy_api import app
+from proxy_pool.config import settings
 from proxy_pool.proxy_getter.proxy_fetch import ProxyFetch
 from proxy_pool.validator.raw_proxy_check import RawProxyCheck
 from proxy_pool.validator.valid_proxy_check import ValidProxyCheck
@@ -32,7 +33,7 @@ def proxy_fetch_run():
 
 
 def api_run():
-    app.run(host="127.0.0.1", port=8080)
+    app.run(host=settings.SERVER_API['host'], port=settings.SERVER_API['port'])
 
 
 if __name__ == '__main__':
