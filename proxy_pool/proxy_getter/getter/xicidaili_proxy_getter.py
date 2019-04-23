@@ -19,9 +19,7 @@ class XicidailiProxyGetter(ProxyGetter):
     @classmethod
     def get_proxy(cls):
         """
-        爬取西刺代理网站html，解析后返回代理
-        @return:
-            string:"192.168.1.1:8000"
+        爬取西刺代理网站html，解析后获得代理将代理加入数据库
         """
         request = HtmlDownloader()
         proxy_getter_logger.info("Start get proxy")

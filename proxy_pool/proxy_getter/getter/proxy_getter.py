@@ -12,8 +12,6 @@ class ProxyGetter(object):
     @abstractmethod
     def get_proxy(cls):
         """
-        爬取代理网站，返回代理
-        @return:
-            string:"192.168.1.1:8000"
+        爬取西刺代理网站html，解析后获得代理将代理加入数据库
         """
         raise NotImplementedError("Abstract method has not been implemented")
