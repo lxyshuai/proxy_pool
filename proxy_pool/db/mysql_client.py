@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from proxy_pool.config.settings import DATABASE
 from proxy_pool.db.client import Client
 from proxy_pool.db.model.proxy import Proxy, Base, HTTP_PROTOCOL
-from proxy_pool.utils.convert import ip_to_int, int_to_ip
 from proxy_pool.utils.logger import db_logger
 
 
@@ -72,6 +71,14 @@ class MysqlClient(Client):
         except exc.IntegrityError as e:
             # 重复插入抛出IntegrityError，捕获异常并不插入重复数据
             self.session.rollback()
+        else:
+            db_logger.info(
+                "insert  proxy %s://%s:%d" % (
+                    "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                    proxy.ip,
+                    proxy.port
+                )
+            )
 
     def delete(self, condition_dict):
         """
@@ -96,6 +103,14 @@ class MysqlClient(Client):
             query = query.filter(condition)
         delete_number = query.delete()
         self.session.commit()
+        db_logger.info(
+            "delete %d proxy %s://%s:%d" % (
+                delete_number,
+                "http" if condition_dict["protocol"] == HTTP_PROTOCOL else "https",
+                condition_dict["ip"],
+                condition_dict["port"]
+            )
+        )
         return delete_number
 
     def update(self, condition_dict, update_dict):
@@ -133,6 +148,14 @@ class MysqlClient(Client):
         update_value_dict = self.determine_update_value(update_dict)
         update_number = query.update(update_value_dict)
         self.session.commit()
+        db_logger.info(
+            "update_number %d proxy %s://%s:%d" % (
+                update_number,
+                "http" if condition_dict["protocol"] == HTTP_PROTOCOL else "https",
+                condition_dict["ip"],
+                condition_dict["port"]
+            )
+        )
         return update_number
 
     def select(self, count, condition_dict):
