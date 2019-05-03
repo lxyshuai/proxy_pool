@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask
 from flask_restful import Resource, Api
 
@@ -57,11 +55,6 @@ class HttpsProxy(Resource):
 
 api.add_resource(HttpProxy, '/http_proxy')
 api.add_resource(HttpsProxy, '/https_proxy')
-
-
-def api_run():
-    app.run(host=settings.SERVER_API['HOST'], port=settings.SERVER_API['PORT'])
-
 
 if __name__ == '__main__':
     app.run(host=settings.SERVER_API['HOST'], port=settings.SERVER_API['PORT'])
