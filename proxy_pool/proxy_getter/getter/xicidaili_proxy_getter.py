@@ -22,7 +22,7 @@ class XicidailiProxyGetter(ProxyGetter):
         爬取西刺代理网站html，解析后获得代理将代理加入数据库
         """
         request = HtmlDownloader()
-        proxy_getter_logger.info("Start get proxy")
+        proxy_getter_logger.info("Start get Xicidaili proxy")
         # 爬取透明proxy
         for page in range(1, 5):
             # 拼接url
