@@ -1,5 +1,5 @@
 # coding=utf-8
-import threading
+
 from Queue import Empty
 from threading import Thread
 
@@ -8,8 +8,6 @@ import requests
 from proxy_pool.db import Client
 from proxy_pool.db.model.proxy import HTTP_PROTOCOL, HTTPS_PROTOCOL
 from proxy_pool.utils.logger import proxy_check_logger
-
-mutex = threading.Lock()
 
 
 class ProxyCheckThread(Thread):
