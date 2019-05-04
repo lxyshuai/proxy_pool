@@ -44,6 +44,3 @@ class JiangxianliProxyGetter(ProxyGetter):
             proxy_getter_logger.info("End get Jiangxianli proxy successfully")
         except Exception as e:
             proxy_getter_logger.warn("End get Jiangxianli proxy unsuccessfully, because %s" % e)
-
-
-JiangxianliProxyGetter.get_proxy()
