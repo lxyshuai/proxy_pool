@@ -1,5 +1,6 @@
 from proxy_pool.proxy_getter.getter.data5u_proxy_getter import Data5uProxyGetter
 from proxy_pool.proxy_getter.getter.jiangxianli_proxy_getter import JiangxianliProxyGetter
 from proxy_pool.proxy_getter.getter.xicidaili_proxy_getter import XicidailiProxyGetter
+from proxy_pool.proxy_getter.getter.xiladaili_proxy_getter import XiladailiProxyGetter
 
-__all__ = XicidailiProxyGetter, Data5uProxyGetter, JiangxianliProxyGetter
+__all__ = XicidailiProxyGetter, Data5uProxyGetter, JiangxianliProxyGetter, XiladailiProxyGetter

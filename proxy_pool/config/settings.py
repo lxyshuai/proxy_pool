@@ -18,7 +18,8 @@ DATABASE = {
 PROXY_GETTER = [
     "Data5uProxyGetter",
     "JiangxianliProxyGetter",
-    "XicidailiProxyGetter"
+    "XicidailiProxyGetter",
+    "XiladailiProxyGetter"
 ]
 
 # 配置 WEB REST API服务
