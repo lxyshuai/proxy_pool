@@ -9,10 +9,10 @@ from proxy_pool.validator.valid_proxy_check import ValidProxyCheck
 
 def run_apscheduler():
     scheduler = BlockingScheduler()
-    scheduler.add_job(ValidProxyCheck().check_valid_proxy, "interval", seconds=1,
+    scheduler.add_job(ValidProxyCheck().check_valid_proxy, "interval", seconds=10,
                       next_run_time=datetime.datetime.now(),
                       id="valid_proxy_check")
-    scheduler.add_job(RawProxyCheck().check_raw_proxy, "interval", minutes=1,
+    scheduler.add_job(RawProxyCheck().check_raw_proxy, "interval", seconds=20,
                       id="raw_proxy_check")
     scheduler.add_job(ProxyFetch.call_all_proxy_getter, "interval", minutes=5,
                       next_run_time=datetime.datetime.now(),
