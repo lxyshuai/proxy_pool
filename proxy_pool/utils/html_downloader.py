@@ -5,6 +5,9 @@ import chardet
 import requests
 from requests import ConnectionError
 
+from proxy_pool.db import Client
+from proxy_pool.db.model.proxy import HTTP_PROTOCOL
+
 # 超时时间
 TIMEOUT = 5
 # 重试次数
@@ -78,17 +81,28 @@ class HtmlDownloader(object):
         }
 
     def download(self, url):
+        # 使用现有代理去访问代理网站
+        condition_dict = {
+            "is_valid": True,
+            "protocol": HTTP_PROTOCOL
+        }
+        proxy_list = Client.select(1, condition_dict)
+        if proxy_list:
+            proxy = Client.select(1, condition_dict)[0]
+            proxies = {"http": "http://%s:%s" % (proxy.ip, proxy.port)}
+        else:
+            proxies = {}
+
         try:
-            response = requests.get(url, headers=self.headers, timeout=TIMEOUT)
+            response = requests.get(url, headers=self.headers, proxies=proxies, timeout=TIMEOUT)
             response.encoding = chardet.detect(response.content)['encoding']
             if response.ok:
                 return response.text
             else:
                 raise ConnectionError
         except ConnectionError:
-            # Todo:使用现有代理去访问代理网站
             for retry_count in range(RETRY_TIME):
-                response = requests.get(url, headers=self.headers, timeout=TIMEOUT)
+                response = requests.get(url, headers=self.headers, proxies=proxies, timeout=TIMEOUT)
                 response.encoding = chardet.detect(response.content)['encoding']
                 if response.ok:
                     return response.text
