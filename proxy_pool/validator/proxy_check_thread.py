@@ -7,13 +7,13 @@ import requests
 
 from proxy_pool.db import Client
 from proxy_pool.db.model.proxy import HTTP_PROTOCOL, HTTPS_PROTOCOL
-from proxy_pool.utils.logger import proxy_check_logger
 
 
 class ProxyCheckThread(Thread):
-    def __init__(self, queue):
+    def __init__(self, queue, logger):
         Thread.__init__(self)
         self.queue = queue
+        self.logger = logger
 
     @classmethod
     def check_proxy(cls, proxy):
@@ -52,7 +52,7 @@ class ProxyCheckThread(Thread):
                         "is_valid": True
                     }
                     Client.update(condition_dict, update_dict)
-                    proxy_check_logger.info("ProxyCheck: {} validation pass".format(proxy.ip))
+                self.logger.info("ProxyCheck: {} validation pass".format(proxy.ip))
             else:
                 condition_dict = {
                     "ip": proxy.ip,
@@ -60,5 +60,5 @@ class ProxyCheckThread(Thread):
                     "protocol": proxy.protocol
                 }
                 Client.delete(condition_dict)
-                proxy_check_logger.info("ProxyCheck: {} validation fail".format(proxy.ip))
-        proxy_check_logger.info("end")
+                self.logger.info("ProxyCheck: {} validation fail".format(proxy.ip))
+        self.logger.info("end")
