@@ -81,20 +81,8 @@ class HtmlDownloader(object):
         }
 
     def download(self, url):
-        # 使用现有代理去访问代理网站
-        condition_dict = {
-            "is_valid": True,
-            "protocol": HTTP_PROTOCOL
-        }
-        proxy_list = Client.select(1, condition_dict)
-        if proxy_list:
-            proxy = Client.select(1, condition_dict)[0]
-            proxies = {"http": "http://%s:%s" % (proxy.ip, proxy.port)}
-        else:
-            proxies = {}
-
         try:
-            response = requests.get(url, headers=self.headers, proxies=proxies, timeout=TIMEOUT)
+            response = requests.get(url, headers=self.headers, timeout=TIMEOUT)
             response.encoding = chardet.detect(response.content)['encoding']
             if response.ok:
                 return response.text
@@ -102,6 +90,23 @@ class HtmlDownloader(object):
                 raise ConnectionError
         except ConnectionError:
             for retry_count in range(RETRY_TIME):
+                proxies_list = list()
+
+                # 代理使用本机IP
+                proxies_list.append({})
+                # 使用数据库中代理IP去访问代理网站
+                condition_dict = {
+                    "is_valid": True,
+                    "protocol": HTTP_PROTOCOL
+                }
+                proxy_list = Client.select(1, condition_dict)
+                if proxy_list:
+                    proxy = Client.select(1, condition_dict)[0]
+                    proxies = {"http": "http://%s:%s" % (proxy.ip, proxy.port)}
+                    proxies_list.append(proxies)
+
+                # 从数据库代理IP和本机IP随机选择一个
+                proxies = random.choice(proxies_list)
                 response = requests.get(url, headers=self.headers, proxies=proxies, timeout=TIMEOUT)
                 response.encoding = chardet.detect(response.content)['encoding']
                 if response.ok:
