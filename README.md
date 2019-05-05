@@ -87,14 +87,17 @@ SERVER_API = {
 # 启动有两种方式
 
 # 第一种
-# apscheduler(多线程)
-# 在proxy_pool/run下运行run_by_apscheduler.py
->>> python run_by_apscheduler.py
+# 在proxy_pool/run下运行run_by_process.py
+python run_by_process.py
 
 # 第二种
-# 多进程
-# 在proxy_pool/run下运行run_by_process.py
->>> python run_by_process.py
+# apscheduler和api模块分开启动
+# 在proxy_pool/run下运行run_by_apscheduler.py
+python run_by_apscheduler.py
+# flask这里我们使用gunicorn
+pip install gunicorn
+# 切换到api文件夹
+nohup gunicorn -w 4 -b 0.0.0.0:8010 proxy_api:app&
 
 ```
 
