@@ -5,6 +5,7 @@ from proxy_pool.config import settings
 from proxy_pool.db import Client
 from proxy_pool.db.model.proxy import HTTP_PROTOCOL, HTTPS_PROTOCOL
 from proxy_pool.utils.check_proxy import check_proxy
+from proxy_pool.utils.logger import api_logger
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,11 +26,34 @@ class HttpProxy(Resource):
                     "port": proxy.port,
                     "protocol": "http"
                 }
+                api_logger.info(
+                    "ProxyCheck: %s://%s:%d validation pass" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
+                api_logger.info(
+                    "Return %s://%s:%d" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
                 return result_dict
+            else:
+                api_logger.info(
+                    "ProxyCheck: %s://%s:%d validation fail" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
         else:
             result_dict = {
                 "message": "Get a http proxy unsuccessfully",
             }
+            api_logger.info("Return None")
             return result_dict
 
 
@@ -48,11 +72,34 @@ class HttpsProxy(Resource):
                     "port": proxy.port,
                     "protocol": "https"
                 }
+                api_logger.info(
+                    "ProxyCheck: %s://%s:%d validation pass" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
+                api_logger.info(
+                    "Return %s://%s:%d" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
                 return result_dict
+            else:
+                api_logger.info(
+                    "ProxyCheck: %s://%s:%d validation fail" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
         else:
             result_dict = {
                 "message": "Get a https proxy unsuccessfully",
             }
+            api_logger.info("Return None")
             return result_dict
 
 

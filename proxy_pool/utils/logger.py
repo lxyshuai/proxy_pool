@@ -88,3 +88,22 @@ console_handler.setFormatter(formatter)
 # 将文件处理器和控制台处理器加入记录器
 valid_proxy_check_logger.addHandler(file_handler)
 valid_proxy_check_logger.addHandler(console_handler)
+
+# api logger
+# 创建名为"api_logger"的记录器
+api_logger = logging.getLogger("api")
+api_logger.setLevel(logging.DEBUG)
+# 创建级别为DEBUG的日志文件处理器
+file_handler = logging.FileHandler(os.path.join(LOG_PATH, "api.log"))
+file_handler.setLevel(logging.DEBUG)
+# 创建级别为DEBUG的控制台日志处理器
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+# 创建格式器，加到日志处理器和控制台处理器中
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(module)s - %(thread)d - %(message)s")
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+# 将文件处理器和控制台处理器加入记录器
+api_logger.addHandler(file_handler)
+api_logger.addHandler(console_handler)
