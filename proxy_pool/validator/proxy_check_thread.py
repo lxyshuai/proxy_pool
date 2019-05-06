@@ -52,7 +52,13 @@ class ProxyCheckThread(Thread):
                         "is_valid": True
                     }
                     Client.update(condition_dict, update_dict)
-                self.logger.info("ProxyCheck: {} validation pass".format(proxy.ip))
+                self.logger.info(
+                    "ProxyCheck: %s://%s:%d validation pass" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
             else:
                 condition_dict = {
                     "ip": proxy.ip,
@@ -60,5 +66,11 @@ class ProxyCheckThread(Thread):
                     "protocol": proxy.protocol
                 }
                 Client.delete(condition_dict)
-                self.logger.info("ProxyCheck: {} validation fail".format(proxy.ip))
+                self.logger.info(
+                    "ProxyCheck: %s://%s:%d validation fail" % (
+                        "http" if proxy.protocol == HTTP_PROTOCOL else "https",
+                        proxy.ip,
+                        proxy.port
+                    )
+                )
         self.logger.info("end")
