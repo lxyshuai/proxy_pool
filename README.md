@@ -16,7 +16,7 @@
 
 * 支持版本: ![](https://img.shields.io/badge/Python-2.7-green.svg)
 
-* 测试地址：
+* 测试地址：http://39.108.228.50:8010
 
 ### 下载安装
 
@@ -111,8 +111,8 @@ nohup gunicorn -w 4 -b 0.0.0.0:8010 proxy_api:app&
 
 | api | method | Description | arg|
 | ----| ---- | ---- | ----|
-| /get_http_proxy | GET | 获取一个可用的http代理 | None |
-| /get_https_proxy | GET    | 获取一个可用的https代理 | None |
+| /http_proxy | GET | 获取一个可用的http代理 | None |
+| /https_proxy | GET    | 获取一个可用的https代理 | None |
 
 ### 问题反馈
 
