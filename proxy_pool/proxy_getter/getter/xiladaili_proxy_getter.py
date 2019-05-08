@@ -70,6 +70,3 @@ class XiladailiProxyGetter(ProxyGetter):
             proxy_getter_logger.info("End get Xiladaili proxy successfully")
         except Exception as e:
             proxy_getter_logger.warn("End get Xiladaili proxy unsuccessfully, because %s" % e)
-
-
-XiladailiProxyGetter.get_proxy()
